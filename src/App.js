@@ -1,32 +1,63 @@
+import { useState } from 'react'; 
+import * as math from "mathjs"; 
 import "./styles.css";
+import Button from "./components/Button";
+import Input from "./components/Input";
 
-function App() {
+const App = () => {
+
+  const [text, setText ] = useState(""); 
+  const [result, setResult] = useState(""); 
+
+  const addToText = (val) => {
+    setText((text) => [...text, val + " "]); 
+  }; 
+
+  const calculateResult = () => {
+    const input = text.join("")
+
+    setResult(math.evaluate(input))
+  }
+
+  const resetInput = () => {
+    setText("")
+    setResult("")
+  }
+
+  const buttonColor = "#46494c"; 
+
   return (
-    <div className="calculator-grid">
-      <div className="output">
-        <div className="previous-operand"></div>
-        <div className="current-operand"></div>
+    <div className="App">
+      <div className="calc-wrapper">
+        <Input text={text} result={result}/>
+        <div className="row">
+        <Button symbol="7" handleClick={addToText}/>
+        <Button symbol="8" handleClick={addToText}/>
+        <Button symbol="9" handleClick={addToText}/>
+        <Button symbol="/" color={buttonColor} handleClick={addToText}/>
+        </div>
+        <div className="row">
+        <Button symbol="4" handleClick={addToText}/>
+        <Button symbol="5" handleClick={addToText}/>
+        <Button symbol="6" handleClick={addToText}/>
+        <Button symbol="*" color={buttonColor} handleClick={addToText}/>
+        </div>
+        <div className="row">
+        <Button symbol="1" handleClick={addToText}/>
+        <Button symbol="2" handleClick={addToText}/>
+        <Button symbol="3" handleClick={addToText}/>
+        <Button symbol="+" color={buttonColor} handleClick={addToText}/>
+        </div>
+        <div className="row">
+        <Button symbol="0" handleClick={addToText}/>
+        <Button symbol="." handleClick={addToText}/>
+        <Button symbol="=" handleClick={calculateResult}/>
+        <Button symbol="-" color={buttonColor} handleClick={addToText}/>
+        </div>
+        <Button symbol="Clear" color="#85182a" handleClick={resetInput}/>
       </div>
-      <button className="span-two">AC</button>
-      <button>DEL</button>
-      <button>÷</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>*</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>+</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>-</button>
-      <button>.</button>
-      <button>0</button>
-      <button className="span-two">=</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App; 
